@@ -430,36 +430,14 @@ autoload(char *s)
     char buf[LINESZ] = {0};
     char *pa = NULL;
     char *rd;
-    //char *Version;
-
-    //char cmdline[256] = "console=tty"; /*Modified by usb rescue or tftp .*/
 
     if(s != NULL  && strlen(s) != 0) {
         SBD_DISPLAY ("AUTO", CHKPNT_AUTO);
-        #if 0 //11-18
-        printf("Press <Enter> to execute loading image:%s\n",s);
-        printf("Press <del> other key to abort.\n");
-
-        switch (get_boot_selection()){
-        case 0:
-            /*
-             video_cls()
-             vga_available = 1;
-             */
-            break;
-#ifdef LOONGSON2F_7INCH 
-        case 2: 
-            pa = cmdline;
-            ui_select(buf, pa);
-            /*fall through*/
+#ifndef select_menu 
+        printf("Press <Enter> to abort.\n");
+	if(get_boot_selection() != NO_KEY)
+		return;
 #endif
-        case 1:
-        default:
-#ifdef CLEAR_WHEN_BOOT
-            //video_cls();
-            //vga_available = 1;
-#endif
-        #endif
             vga_available = 0;
             rd= getenv("rd");
             if (rd != 0){
@@ -489,12 +467,6 @@ autoload(char *s)
             do_cmd (buf);
             vga_available = 1;
     }
-            /*break;
-        }
-    } else {
-        //video_cls();
-        //  vga_available = 1;
-    }*/
 }
 
 #else
