@@ -324,13 +324,19 @@ int get_boot_selection(void)
     unsigned int cnt;
     unsigned int dly;
     struct termio sav;
+#ifdef LOONGSON2F_NAS	
+    dly = 500;
+#else
     dly = 128;
+#endif
 
     
     ioctl(STDIN, CBREAK, &sav);
     do {
         delay(10000);
-        //if (dly % 128 == 0) printf (".");
+#ifdef LOONGSON2F_NAS	
+        if (dly % 128 == 0) printf (".");
+#endif
 
         ioctl (STDIN, FIONREAD, &cnt);
 
