@@ -461,10 +461,7 @@ autoload(char *s)
                 do_cmd(buf);
             }
 
-            if (buf[0] == 0) {
-                strcpy(buf,"load ");
-                strcat(buf,s);
-            }
+            sprintf(buf, "load %s", s);
             do_cmd(buf);
 
             if (pa == NULL || pa[0] == '\0') 
