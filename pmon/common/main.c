@@ -723,6 +723,7 @@ dbginit (char *adr)
     md_setpc(NULL, (int32_t) CLIENTPC);
     md_setsp(NULL, tgt_clienttos ());
     DevicesInit();
+#ifdef boot_menu
     /*printf("Press <DEL> key to enter pmon console.\n");
     printf("Press <TAB> key to recover system .\n");
     printf("Press <ENTER> key to boot selection .\n");*/
@@ -770,10 +771,10 @@ dbginit (char *adr)
                     printf("[auto load error]you haven't set the kernel path!\n");
                 }           
 #endif
-#else
+#else  /* AUTOLOAD */
             s = getenv ("autoboot");
             autorun (s);
-#endif
+#endif /* AUTOLOAD */
             break;
 
 #if defined(LOONGSON2F_7INCH)||defined(LOONGSON2F_FULOONG)||defined(LOONGSON2F_ALLINONE)||defined(LOONGSON2F_3GNB)||defined(LOONGSON3A_3AEV)||defined(LOONGSON2G_2G690E)||defined(LOONGSON3A_3A780E)||defined(LOONGSON3A_3AITX)
@@ -800,6 +801,14 @@ dbginit (char *adr)
 #endif
             break;
     }
+#else  /* boot_menu */
+                s = getenv ("al");
+                if (s != 0){
+                    autoload (s);
+                } else {
+                    printf("[auto load error]please set the kernel path into env al!\n");
+                }
+#endif /* boot_menu */
 }
 
 /*
