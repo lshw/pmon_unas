@@ -34,8 +34,8 @@ option     LOONGSON2F_NAS
 # Module selection. Selects pmon features
 #
 select		mod_flash_amd		# AMD flash device programming
-#select		mod_flash_intel		# intel flash device programming
-#select		mod_flash_sst           # sst flash device programming
+select		mod_flash_intel		# intel flash device programming
+select		mod_flash_sst           # sst flash device programming
 select		mod_flash_winbond       # winbond flash device programming
 select		mod_debugger		# Debugging module
 select		mod_symbols		# Symbol table handling
@@ -86,12 +86,12 @@ option ALL_OTHER_KEY_TO_STOP_BOOT
 option		SYSTYPE="\"Bonito\""
 option		TARGETNAME="\"Bonito\""
 
-#option NSATA
+option NSATA
 #
 # Command selection. Selects pmon commands
 #
 select          cmd_about               # Display info about PMON
-select		cmd_gui
+#select		cmd_gui
 select          cmd_boot                # Boot wrapper
 select          cmd_mycmd
 #select          cmd_newmt
@@ -156,31 +156,25 @@ usb*		 at usbbus ?
 select      mod_usb
 select  	mod_usb_storage
 select 	 	mod_usb_ohci
-select      mod_usb_kbd
+#select      mod_usb_kbd
 #select      mod_usb_uhci
 
 #### IDE controllers
-pciide* 	at pci ? dev ? function ? flags 0x0000
+#pciide* 	at pci ? dev ? function ? flags 0x0000
 
 #### IDE hard drives
-wd*		at pciide? channel ? drive ? flags 0x0000
+#wd*		at pciide? channel ? drive ? flags 0x0000
 
 
 #### Pseudo devices
 pseudo-device	loop	1	# network loopback
 
 #added by qianyl
-#sil0    at pci ? dev ? function  ?    #sil3114(sata controller)
-#sata*   at satabus ?
-#select mod_sata
-#select mod_sil
+sil*    at pci ? dev ? function  ?    #sil3114(sata controller)
+sata*   at satabus ?
+select mod_sata
+select mod_sil
 
 #ide_cd*		at pciide? channel ? drive ? flags 0x0001
 select 		iso9660
 
-#added by qianyl
-#sil*    at pci ? dev ? function  ?    #sil3114(sata controller)
-#sata*   at satabus ?
-
-#### Pseudo devices
-#pseudo-device	loop	1	# network loopback
