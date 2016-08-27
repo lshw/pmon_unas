@@ -297,7 +297,7 @@ int ata_sff_softreset(struct ata_port *p_ap)
 {
 
     u8 status = 0;
-    int timeout = 20;
+    int timeout = 50;
 
     p_ap->ctl =0x08;    //Default value of control reg
     /* software reset.  causes dev0 to be selected */
@@ -310,8 +310,8 @@ int ata_sff_softreset(struct ata_port *p_ap)
     mdelay(150);
     status = ata_sff_busy_wait(p_ap,ATA_BUSY,300,0);
     while((status & ATA_BUSY)&&timeout) {
-        mdelay(150);
-        status = ata_sff_busy_wait(p_ap, ATA_BUSY,3,0);
+        mdelay(300);
+        status = ata_sff_busy_wait(p_ap, ATA_BUSY,300,0);
         timeout--;
     }
 
