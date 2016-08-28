@@ -446,7 +446,10 @@ autoload(char *s)
             }
 
             sprintf(buf, "load %s", s);
-            do_cmd(buf);
+            if (do_cmd(buf) != 0) {
+              mdelay(1000*30); //load 失败，可能硬盘没有初始化完成， 延迟30秒， 重启
+              do_cmd("reboot");
+            }
 
             if (pa == NULL || pa[0] == '\0') 
                 pa=getenv("karg");
