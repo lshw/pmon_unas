@@ -785,6 +785,7 @@ tgt_mapenv(int (*func) __P((char *, char *)))
 	char env[512];
 	char *nvram;
 	int i;
+        unsigned int mem_size,mem_size_high;
 
 	/*
 	 *  Check integrity of the NVRAM env area. If not in order
@@ -846,11 +847,23 @@ tgt_mapenv(int (*func) __P((char *, char *)))
 #endif
 
 
-	sprintf(env, "%d", memorysize / (1024 * 1024));
-	(*func)("memsize", env);
-
-	sprintf(env, "%d", memorysize_high / (1024 * 1024));
+        mem_size  = memorysize;
+	mem_size_high = memorysize_high;
+#ifdef MEM_LIMIT
+/* 在linux下，目前不支持龙芯2f的内存大于2G
+ * 因此在设置文件里增加一个option  MEM_LIMIT限制一下 */
+        if (mem_size > MEM_LIMIT) {
+		mem_size = MEM_LIMIT;
+		mem_size_high = 0;
+	}else if (mem_size_high + mem_size > MEM_LIMIT)
+		mem_size_high = MEM_LIMIT - mem_size;
+#endif //MEM_LIMIT
+	printf("mem limit %dM\n",MEM_LIMIT / (1024 * 1024));
+	sprintf(env, "%d", mem_size_high / (1024 * 1024));
 	(*func)("highmemsize", env);
+
+	sprintf(env, "%d", mem_size / (1024 * 1024));
+	(*func)("memsize", env);
 
 	sprintf(env, "%d", md_pipefreq);
 	(*func)("cpuclock", env);

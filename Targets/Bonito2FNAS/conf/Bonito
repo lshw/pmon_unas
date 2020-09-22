@@ -23,10 +23,11 @@ option		BONITOEL
 option		MIPS
 option		INET
 #option		GODSONEV1		# GALILEO GT64240 Host Bridge
-#select     vt82c686        #via686a/b code
-select     cs5536 
-option     VGA_NO_ROM       # display card has no rom
-option     LOONGSON2F_NAS
+#select		vt82c686        #via686a/b code
+select		cs5536
+option		VGA_NO_ROM       # display card has no rom
+option		LOONGSON2F_NAS
+option		MEM_LIMIT="1024 * 1024 * 1024" #这里限制可以限制一下传递给linux的最大内存量,现在linux大于1G会异常
 #option		HAVE_FLASH		# Platform has FLASH memory.
 #option		HAVE_NVENV		# Platform has non-volatile env mem 
 
