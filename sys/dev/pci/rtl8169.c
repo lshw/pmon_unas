@@ -131,6 +131,7 @@ VERSION 2.2LK	<2005/01/25>
 #include <machine/intr.h>
 
 #include <dev/mii/miivar.h>
+#include <dev/mii/mii.h>
 
 #include <dev/pci/pcivar.h>
 #include <dev/pci/pcireg.h>
@@ -1189,6 +1190,10 @@ static int rtl8169_set_speed_xmii(struct rtl8169_private *tp,
 				  u8 autoneg, u16 speed, u8 duplex)
 {
 	int auto_nego, giga_ctrl;
+
+	mdio_write(tp, 0x1F, 0x0000);
+	mdio_write(tp, 0x0E, 0x0000);
+	mdio_write(tp, MII_BMCR, mdio_read(tp,MII_BMCR) & ~BMCR_PDOWN);
 
 	auto_nego = mdio_read(tp, PHY_AUTO_NEGO_REG);
 	auto_nego &= ~(PHY_Cap_10_Half | PHY_Cap_10_Full |
