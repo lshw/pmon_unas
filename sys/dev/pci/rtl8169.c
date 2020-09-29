@@ -1926,11 +1926,11 @@ r8169_attach(struct device * parent, struct device * self, void *aux)
     tp->sc_ih = pci_intr_establish(pc, ih, IPL_NET, rtl8169_interrupt, tp, 
 			self->dv_xname);
 	if(tp->sc_ih == NULL){
-             printf("error: could not establish interrupt !");
+             printf("error: could not establish interrupt !\n");
 	      RTLDBG;
 	      return;
 	}else{
-             printf("interrupt established!");
+             printf("interrupt established!\n");
 	}
     if_in_attach = 1;
 	return ;

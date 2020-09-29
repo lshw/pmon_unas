@@ -262,6 +262,6 @@ _pci_devinfo(pcireg_t id_reg, pcireg_t class_reg, int *supp, char *cp)
 	    cp += sprintf(cp, ", interface: 0x%02x", interface);
 	    cp += sprintf(cp, ", revision: 0x%02x", revision);
 	}
-	cp+=sprintf(cp,")");
+	cp+=sprintf(cp,")\n");
 /*	strcpy (cp, ")");*/
 }
