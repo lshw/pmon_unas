@@ -5,6 +5,9 @@
 #  This file is supposed to be included by target file after
 #  endian has been defined.
 #
+
+#配置文件
+
 machine         Bonito2FNAS        mips    # CPU Architecture, Platform
 config          pmon 
 
@@ -73,7 +76,7 @@ option		USB_OHCI_NO_ROM
 #option         X86_LIKE_SPACE          # make pci addr == cpu addr
 #option 	NEW_PCI_WINDOW          # use 128/32/32 pci windows
 #option         VGA_BASE=0xba000000 
-option          VGA_BASE=0xb0000000 
+#option          VGA_BASE=0xb0000000
 #option          DEBUG_EMU_VGA
 
 #behavior
